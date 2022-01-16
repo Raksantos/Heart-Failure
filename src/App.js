@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import * as Yup from 'yup';
 import Dropdown from './components/Form/dropdown';
 import React, {useRef} from 'react';
-import axios from 'axios';
+import API from './services/api';
 
 const initialData = {
   sexo: 'Masculino',
@@ -210,11 +210,15 @@ function App() {
         final_data['Resultados de eletrocardiograma em repouso_ST'] = 1
       }
 
-      axios.post(`localhost:5000/predict`, { final_data })
+      console.log(final_data)
+
+      API.post('/predict', final_data)
       .then(res => {
         console.log(res);
         console.log(res.data);
-      })
+      }).catch(erro => {
+        console.log(erro);
+      });
 
     }catch(err){
       if(err instanceof Yup.ValidationError){
