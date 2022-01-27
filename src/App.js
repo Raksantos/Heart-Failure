@@ -3,8 +3,10 @@ import Input from './components/Form/input';
 import styled from 'styled-components';
 import * as Yup from 'yup';
 import Dropdown from './components/Form/dropdown';
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import API from './services/api';
+import SuccesAlert from './components/Alerts/SucessAlert';
+import FailAlert from './components/Alerts/FailAlert';
 
 const initialData = {
   sexo: 'Masculino',
@@ -38,6 +40,15 @@ form {
   margin: 0 auto;
   max-width: 500px;
   padding: 30px 50px;
+  border-radius: 10px;
+}
+
+.toast-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin: 0 auto;
+  max-width: 500px;
   border-radius: 10px;
 }
 
@@ -90,8 +101,11 @@ span {
 }
 `;
 
-function App() {
+function App(){
   const formRef = useRef(null);
+
+  const [result, setResult] = useState(null);
+  const [status, setStaus] = useState(null);
 
   async function handleSubmit(data){
     try{
@@ -100,7 +114,6 @@ function App() {
         .lessThan(110, 'Idade muito alta').typeError('É necessário um número'),
         pressao_sanguinea_em_repouso: Yup.number().min(0, 'Valor inválido').typeError('É necessário um número'),
         colesterol: Yup.number().min(0, 'Valor inválido').typeError('É necessário um número'),
-        acucar_no_sangue_em_jejum: Yup.number().min(0, 'Valor inválido').typeError('É necessário um número'),
         frequencia_cardiaca_maxima_alcançada: Yup.number().integer('Deve ser um número inteiro')
         .min(0, 'Valor inválido').typeError('É necessário um número'),
         oldpeak: Yup.number().typeError('É necessário um número'),
@@ -136,7 +149,6 @@ function App() {
       final_data['Idade (anos)'] = parseInt(data['idade'])
       final_data['Pressão sanguínea em repouso (mm Hg)'] = parseInt(data['pressao_sanguinea_em_repouso'])
       final_data['Colesterol (mm/dl)'] = parseInt(data['colesterol'])
-      final_data['Açúcar no sangue em jejum'] = parseInt(data['acucar_no_sangue_em_jejum'])
       final_data['Frequência cardíaca máxima alcançada'] = parseInt(data['frequencia_cardiaca_maxima_alcançada'])
       final_data['Oldpeak'] = parseInt(data['oldpeak'])
 
@@ -210,14 +222,22 @@ function App() {
         final_data['Resultados de eletrocardiograma em repouso_ST'] = 1
       }
 
-      console.log(final_data)
+      if(data['acucar_no_sangue_em_jejum'] === 'S'){
+        final_data['Açúcar no sangue em jejum'] = 1
+      }else{
+        final_data['Açúcar no sangue em jejum'] = 0
+      }
+
+      formRef.current.setErrors([]);
 
       API.post('/predict', final_data)
       .then(res => {
-        console.log(res);
-        console.log(res.data);
+        setResult(res.data['Result']);
+        setStaus(res.status);
       }).catch(erro => {
         console.log(erro);
+        setStaus(404);
+        setResult(null);
       });
 
     }catch(err){
@@ -253,7 +273,8 @@ function App() {
           <label>Colesterol (mm/dl)</label>
           <Input name='colesterol'/>
           <label>Açúcar no sangue em jejum</label>
-          <Input name='acucar_no_sangue_em_jejum'/>
+          <Dropdown name='acucar_no_sangue_em_jejum' items={[{name: 'Sim', value: 'S'}, 
+                                            {name: 'Não', value: 'N'}]}/>
           <label>Resultados de eletrocardiograma em repouso</label>
           <Dropdown name='resultados_de_eletrocardiograma_em_repouso' items={[{name: 'LVH', value: 'LVH'}, 
                                             {name: 'Normal', value: 'Normal'}, 
@@ -271,7 +292,21 @@ function App() {
                                             {name: 'Up', value: 'Up'}]}/>
           <button type="submit" className="submitButton">Enviar</button>
         </Form>
-        <br/><br/>
+        <br/>
+        <div className="toast-container">
+          {result === 0 && (<SuccesAlert title="Tudo certo!" 
+          description="Nosso código não classificou suas características como próprias de um problema no coração"
+          recomendation="Se os sintomas persistirem, procure um cardiologista na unidade mais próxima!"/>)}
+          
+          {result === 1 && (<FailAlert title="Encontramos algo." 
+          description="Nosso código classificou suas características como próprias de um problema no coração"
+          recomendation="Procure um cardiologista na unidade mais próxima!"/>)}
+          
+          {(status !== null && status !== 200) && <FailAlert title="Erro interno!" 
+            description="Provavelmente nosso servidor está fora do ar!"
+            recomendation="Voltaremos em breve."/>}
+        </div>
+          <br/>
         <footer>
             <span className="text-white text-bold ml-2">Desenvolvedores:</span>
             <span className="text-white text-bold ml-2">Rodrigo</span>
