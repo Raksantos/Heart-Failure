@@ -112,11 +112,11 @@ function App(){
       const schema = Yup.object().shape({
         idade: Yup.number().integer('Idade inválida').positive('Idade inválida').typeError('É necessário um número')
         .lessThan(110, 'Idade muito alta').typeError('É necessário um número'),
-        pressao_sanguinea_em_repouso: Yup.number().min(0, 'Valor inválido').typeError('É necessário um número'),
-        colesterol: Yup.number().min(0, 'Valor inválido').typeError('É necessário um número'),
-        frequencia_cardiaca_maxima_alcançada: Yup.number().integer('Deve ser um número inteiro')
+        pressao_sanguinea_em_repouso: Yup.number().min(0, 'Valor inválido').lessThan(200, 'Valor inválido').typeError('É necessário um número'),
+        colesterol: Yup.number().min(0, 'Valor inválido').typeError('É necessário um número').lessThan(300, 'Valor inválido'),
+        frequencia_cardiaca_maxima_alcançada: Yup.number().integer('Deve ser um número inteiro').lessThan(220, 'Valor inválido')
         .min(0, 'Valor inválido').typeError('É necessário um número'),
-        oldpeak: Yup.number().typeError('É necessário um número'),
+        oldpeak: Yup.number().typeError('É necessário um número').max(220, 'Valor inválido').min(0, 'Valor inválido'),
       });
       
       await schema.validate(data, {
