@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/Heart-Failure/static/css/main.e6c13ad2.css",
-    "main.js": "/Heart-Failure/static/js/main.8e57bc20.js",
+    "main.js": "/Heart-Failure/static/js/main.4e9ac3f6.js",
     "static/js/787.b328eb27.chunk.js": "/Heart-Failure/static/js/787.b328eb27.chunk.js",
     "index.html": "/Heart-Failure/index.html",
     "main.e6c13ad2.css.map": "/Heart-Failure/static/css/main.e6c13ad2.css.map",
-    "main.8e57bc20.js.map": "/Heart-Failure/static/js/main.8e57bc20.js.map",
+    "main.4e9ac3f6.js.map": "/Heart-Failure/static/js/main.4e9ac3f6.js.map",
     "787.b328eb27.chunk.js.map": "/Heart-Failure/static/js/787.b328eb27.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.8e57bc20.js"
+    "static/js/main.4e9ac3f6.js"
   ]
 }
