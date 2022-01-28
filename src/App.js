@@ -264,10 +264,10 @@ function App(){
           <Dropdown name='sexo' items={[{name: 'Masculino', value: 'M'}, 
                                                         {name: 'Feminino', value: 'F'}]}/>
           <label>Tipo de dor no peito</label>
-          <Dropdown name='tipo_dor_peito' items={[{name: 'ATA', value: 'ATA'}, 
-                                            {name: 'NAP', value: 'NAP'}, 
-                                            {name: 'ASY', value: 'ASY'},
-                                            {name: 'TA', value: 'TA'}]}/>
+          <Dropdown name='tipo_dor_peito' items={[{name: 'Atypical Angina', value: 'ATA'}, 
+                                            {name: 'Non-Anginal Pain', value: 'NAP'}, 
+                                            {name: 'Asymptomatic', value: 'ASY'},
+                                            {name: 'Typical Angina', value: 'TA'}]}/>
           <label>Pressão sanguínea em repouso (mm Hg)</label>
           <Input name='pressao_sanguinea_em_repouso'/>
           <label>Colesterol (mm/dl)</label>
