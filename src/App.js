@@ -296,11 +296,11 @@ function App(){
         <div className="toast-container">
           {result === 0 && (<SuccesAlert title="Tudo certo!" 
           description="Nosso código não classificou as características como próprias de um problema no coração"
-          recomendation="Caso alguma dúvida persista, realize alguns exames mais detalhados!"/>)}
+          recomendation="Caso alguma dúvida persista, passe alguns exames mais detalhados!"/>)}
           
           {result === 1 && (<FailAlert title="Encontramos algo." 
           description="Nosso código classificou as características como próprias de um problema no coração"
-          recomendation="Caso ache necessário, realize alguns exames mais detalhados!"/>)}
+          recomendation="Caso ache necessário, passe alguns exames mais detalhados!"/>)}
           
           {(status !== null && status !== 200) && <FailAlert title="Erro interno!" 
             description="Provavelmente nosso servidor está fora do ar!"
