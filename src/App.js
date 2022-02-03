@@ -295,12 +295,12 @@ function App(){
         <br/>
         <div className="toast-container">
           {result === 0 && (<SuccesAlert title="Tudo certo!" 
-          description="Nosso código não classificou suas características como próprias de um problema no coração"
-          recomendation="Se os sintomas persistirem, procure um cardiologista na unidade mais próxima!"/>)}
+          description="Nosso código não classificou as características como próprias de um problema no coração"
+          recomendation="Caso alguma dúvida persista, realize alguns exames mais detalhados!"/>)}
           
           {result === 1 && (<FailAlert title="Encontramos algo." 
-          description="Nosso código classificou suas características como próprias de um problema no coração"
-          recomendation="Procure um cardiologista na unidade mais próxima!"/>)}
+          description="Nosso código classificou as características como próprias de um problema no coração"
+          recomendation="Caso ache necessário, realize alguns exames mais detalhados!"/>)}
           
           {(status !== null && status !== 200) && <FailAlert title="Erro interno!" 
             description="Provavelmente nosso servidor está fora do ar!"
